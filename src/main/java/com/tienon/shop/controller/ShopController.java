@@ -23,7 +23,7 @@ public class ShopController {
         model.put("aaa","abc");
         Shop shop = shopService.getShopDtl(1);
         model.put("shop",shop);
-        System.out.println("123");
+        System.out.println("123456");
         return "show";
     }
 	
