@@ -1,0 +1,25 @@
+# 数据源配置
+server:
+  port: 8099
+
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/test1?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+
+#######   此处有先后顺序，不然会报错
+mybatis:
+    config-location: classpath:mybatis-config.xml
+    type-aliases-package: com.tienon.shop.data.domain
+   mapper-locations: classpath:/com/tienon/shop/data/mapper/*.xml

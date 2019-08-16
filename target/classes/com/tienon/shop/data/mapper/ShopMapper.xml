@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.tienon.shop.data.mapper.ShopMapper">
+    <resultMap id = "BaseResultMap" type = "com.tienon.shop.data.domain.Shop">
+        <result property = "id" column = "ID"/>
+        <result property = "nm" column = "NM"/>
+        <result property = "tm" column = "TM"/>
+    </resultMap>
+
+    <select id="findShopById" parameterType="String" resultType="com.tienon.shop.data.domain.Shop" >
+      SELECT * FROM SHOP WHERE ID = #{id}
+    </select>
+
+    <select id="selectShopList" parameterType="com.tienon.shop.data.vo.req.A100S1000_Request" resultType="com.tienon.shop.data.domain.Shop">
+      SELECT * from shop where 1 = 1
+      <if test="nm != null and nm != '' ">
+        and NM like '%${nm}%'
+      </if>
+      <if test="tm != null and tm != '' ">
+        and TM = #{tm}
+      </if>
+    </select>
+
+    <select id="getShopDtlById" parameterType="Integer" resultType="com.tienon.shop.data.domain.Shop" >
+      SELECT * FROM SHOP WHERE ID = #{id}
+    </select>
+</mapper>
