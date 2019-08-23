@@ -10,6 +10,7 @@
     ${shop}  <br>
 
     <h1>测试修改了文件</h1>
+    ${aaa}
     <input type="button" value="点我" />
     <input type="text" style="height:100px;width:90%" id="input"/>
 
