@@ -6,9 +6,10 @@
     <title>Full Layout - jQuery EasyUI Demo</title>
 </head>
 <body>
-    ${shop.id} <<br>
-    ${shop}
+    ${shop.id} <br>
+    ${shop}  <br>
 
+    <h1>测试修改了文件</h1>
     <input type="button" value="点我" />
     <input type="text" style="height:100px;width:90%" id="input"/>
 
