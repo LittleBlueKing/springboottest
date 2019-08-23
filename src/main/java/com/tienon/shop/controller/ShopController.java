@@ -21,7 +21,6 @@ public class ShopController {
     @RequestMapping(value="/show")
     public String showMsg(Map<String, Object> model){
         model.put("aaa","abc");
-        System.out.println("12313");
         Shop shop = shopService.getShopDtl(1);
         model.put("shop",shop);
         return "show";
