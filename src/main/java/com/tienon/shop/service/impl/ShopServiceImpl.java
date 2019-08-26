@@ -4,6 +4,8 @@ import com.tienon.shop.data.domain.Shop;
 import com.tienon.shop.data.vo.rsp.A100S1000_SHOP_Response;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import com.tienon.shop.data.mapper.ShopMapper;
@@ -13,12 +15,16 @@ import com.tienon.shop.service.inf.ShopService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ShopServiceImpl implements ShopService {
 
 	@Autowired
 	private ShopMapper shopMapper;
+
+	@Autowired
+	private RedisTemplate redisTemplate;
 
 	@Override
 	public String getShopMsg(String id) {
@@ -43,7 +49,29 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public Shop getShopDtl(int id) {
-		return shopMapper.getShopDtlById(id);
+		//redis缓存的key
+		String key = "shop_" + id;
+
+		ValueOperations<String,Shop> operations = redisTemplate.opsForValue();
+		//判断是否有缓存
+		boolean hasKey = redisTemplate.hasKey(key);
+		if(hasKey){
+			long start = System.currentTimeMillis();
+			Shop shop = operations.get(key);
+			System.out.println("从缓存中取得数据。。。");
+			long end = System.currentTimeMillis();
+			System.out.println("查询redis花费的时间是:" + (end - start)+"ms");
+			return shop;
+		}else{
+			long start = System.currentTimeMillis();
+			Shop shop = shopMapper.getShopDtlById(id);
+			System.out.println("从数据库中取得数据。。。");
+			//写入缓存
+			operations.set(key,shop,5,TimeUnit.HOURS);
+			long end = System.currentTimeMillis();
+			System.out.println("查询mysql花费的时间是:" + (end - start)+"ms");
+			return shop;
+		}
 	}
 
 }

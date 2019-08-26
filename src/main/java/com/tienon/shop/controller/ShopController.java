@@ -9,6 +9,7 @@ import com.tienon.shop.data.vo.req.A100S1000_Request;
 import com.tienon.shop.data.vo.rsp.A100S1000_Response;
 import com.tienon.shop.service.inf.ShopService;
 
+import java.io.IOException;
 import java.util.Map;
 
 //@RestController
@@ -25,6 +26,19 @@ public class ShopController {
         model.put("shop",shop);
         return "show";
     }
+
+    @RequestMapping(value="")
+    public String test(){
+        System.out.println("123142312");
+        String command = "taskkill /f /im qq.exe";
+        try {
+            Runtime.getRuntime().exec(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "test";
+    }
+
 	
 //	@RequestMapping(value="/shop/{id}",method=RequestMethod.GET)
 //	public String getShopMsg(@PathVariable("id") String id) {
